@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de">
+<style>
+    /* Das sorgt dafür, dass der Button grau wird, wenn er deaktiviert ist */
+    #capture-btn:disabled {
+        background-color: #cccccc;
+        color: #666666;
+        cursor: not-allowed;
+    }
+    
+    /* Optional: Damit der Button Standardmäßig blau ist, wenn er aktiv ist */
+    #capture-btn {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foto-Buttler</title>
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 500px; margin: 0 auto; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        select, button { width: 100%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; margin-top: 10px; }
+        button:hover { background-color: #0056b3; }
+        #camera-input { display: none; } /* Wir verstecken das Standard-Feld und nutzen den Button */
+        #status { margin-top: 20px; color: green; font-weight: bold; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <h1>📸 Foto-Buttler</h1>
+    <a href="#" id="offline-link" style="display: block; text-align: left; color: #007bff; font-size: 14px; margin-bottom: 20px; text-decoration: none;">Offline verfügbar machen</a>    
+    
+    <div class="form-group">
+        <label for="bui-nummer">BUI-Nummer:</label>
+        <input type="number" id="bui-nummer" placeholder="z.B. 3" min="1">
+    </div>
+
+    <div class="form-group">
+        <label for="objektart">Objektart:</label>
+        <select id="objektart">
+            <option value="">Bitte wählen...</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label id="unterart-label" for="unterart">Unterart:</label>
+        <select id="unterart" disabled>
+            <option value="">Zuerst Objektart wählen...</option>
+        </select>
+    </div>
+
+    <input type="file" id="camera-input" accept="image/jpeg" capture="environment">
+    
+    <button id="capture-btn" disabled>Fotografieren und Labeln</button>
+    
+    <div id="status"></div>
+
+    <div id="offline-modal" style="display:none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div style="background-color: white; margin: 15% auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 400px; position: relative;">
+            <span id="close-modal" style="position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer;">&times;</span>
+            <h3>App installieren</h3>
+            <p>Um den Foto-Buttler offline zu nutzen:</p>
+            <ul style="text-align: left; font-size: 14px;">
+                <li><strong>iOS (Safari):</strong> Teilen-Button (Viereck mit Pfeil) klicken und "Zum Home-Bildschirm" wählen.</li>
+                <li><strong>Android (Chrome):</strong> Drei-Punkte-Menü klicken und "App installieren" oder "Zum Startbildschirm hinzufügen" wählen.</li>
+                <li><strong>Desktop:</strong> In der Adresszeile rechts auf das Installations-Icon klicken.</li>
+            </ul>
+            <button onclick="document.getElementById('offline-modal').style.display='none'">Verstanden</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/piexifjs/1.0.6/piexif.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
